@@ -1,5 +1,7 @@
 package cn.edu.znufe.dhf.apisapp;
 
+import android.os.*;
+import android.os.Process;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Main Activity.
@@ -85,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // Settings.
+            return true;
+        } else if (id == R.id.action_about) {
+            // Exit.
+            Process.killProcess(Process.myPid());
             return true;
         }
 
@@ -153,11 +160,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.activity_main_news);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.activity_main_essay);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.activity_main_horoscope);
             }
             return null;
         }
