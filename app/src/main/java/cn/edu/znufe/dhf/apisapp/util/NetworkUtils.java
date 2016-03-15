@@ -64,7 +64,7 @@ public class NetworkUtils {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         // Make the HTTP GET request, marshaling the response to a object
-        ResponseEntity<T> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.GET, new HttpEntity<String>(getHttpHeaders(MediaType.TEXT_PLAIN)), responseType);
+        ResponseEntity<T> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.GET, new HttpEntity<String>(getHttpHeaders(MediaType.APPLICATION_JSON)), responseType);
 
         return responseEntity.getBody();
     }
