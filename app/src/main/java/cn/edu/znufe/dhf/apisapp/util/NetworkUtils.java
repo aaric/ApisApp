@@ -9,6 +9,8 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import cn.edu.znufe.dhf.apisapp.constant.App;
+
 /**
  * Created by Aaric on 2016/3/15.
  */
@@ -23,7 +25,7 @@ public class NetworkUtils {
      */
     private static HttpHeaders getHttpHeaders(MediaType mediaType) throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("apikey", "d259367c2da923b105bb1dd2311cf1b2");
+        httpHeaders.set(App.BAIDU_APIKEY_NAME, App.BAIDU_APIKEY_VALUE);
         httpHeaders.setContentType(mediaType);
         return httpHeaders;
     }
@@ -64,7 +66,7 @@ public class NetworkUtils {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         // Make the HTTP GET request, marshaling the response to a object
-        ResponseEntity<T> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.GET, new HttpEntity<String>(getHttpHeaders(MediaType.APPLICATION_JSON)), responseType);
+        ResponseEntity<T> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.GET, new HttpEntity<String>(getHttpHeaders(MediaType.TEXT_PLAIN)), responseType);
 
         return responseEntity.getBody();
     }

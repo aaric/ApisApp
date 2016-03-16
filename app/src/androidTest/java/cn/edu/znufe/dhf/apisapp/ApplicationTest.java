@@ -4,7 +4,7 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
-import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.constant.App;
 import cn.edu.znufe.dhf.apisapp.util.NetworkUtils;
 
 /**
@@ -18,34 +18,37 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     private static final String TAG = ApplicationTestCase.class.getSimpleName();
 
     /**
-     * 构造函数
+     * Constructor
      */
     public ApplicationTest() {
         super(Application.class);
     }
 
     /**
-     * 测试网络工具GET请求功能
+     * Test for get string by restTemplate
      *
      * @throws Exception
      */
     public void testGetForString() throws Exception {
-        Log.e(TAG, "result----->" + NetworkUtils.getForString("http://apis.baidu.com/txapi/social/social?num=10&page=1"));
+        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_NEWS));
+        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_HEALTHY));
+        Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_TRAVELS));
     }
 
     /**
-     * 测试网络工具GET请求功能
+     * Test for get object by retrofit
      *
      * @throws Exception
      */
-    public void testGetForObject() throws Exception {
-        NewsMapObject resultObject = NetworkUtils.getForObject("http://apis.baidu.com/txapi/social/social?num=10&page=1", NewsMapObject.class);
-        Log.e(TAG, "object----->" + resultObject);
-        if(null != resultObject) {
-            Log.e(TAG, "msg----->" + resultObject.getMsg());
-            Log.e(TAG, "code----->" + resultObject.getCode());
-            Log.e(TAG, "size----->" + resultObject.getNewslist().size());
-        }
+    public void testRetrofit() throws Exception {
+        /*String httpUrl = "";
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("http://10.0.2.2:8080")
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<TestObject> call = retrofitService.getMessZh("test");
+        Log.e(TAG, "result----->" + call.execute().body().getMessage());*/
 
     }
 

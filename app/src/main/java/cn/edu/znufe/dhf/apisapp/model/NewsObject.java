@@ -5,25 +5,10 @@ package cn.edu.znufe.dhf.apisapp.model;
  */
 public class NewsObject {
 
-    /**
-     * 发布时间
-     */
     private String ctime;
-    /**
-     * 新闻标题
-     */
     private String title;
-    /**
-     * 新闻简介
-     */
     private String description;
-    /**
-     * 图片路径
-     */
     private String picUrl;
-    /**
-     * 详情地址
-     */
     private String url;
 
     public NewsObject() {
