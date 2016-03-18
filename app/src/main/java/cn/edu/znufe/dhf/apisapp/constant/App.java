@@ -8,25 +8,27 @@ public final class App {
     /**
      * Baidu
      */
+    public static final String BAIDU_API_BASE_URL = "http://apis.baidu.com";
     public static final String BAIDU_APIKEY_NAME = "apikey";
     public static final String BAIDU_APIKEY_VALUE = "d259367c2da923b105bb1dd2311cf1b2";
+    public static final String BAIDU_APIKEY_AUTH = BAIDU_APIKEY_NAME + ": " + BAIDU_APIKEY_VALUE;
 
     /**
      * News
      */
-    public static final String BASE_URL_NEWS = "http://apis.baidu.com/txapi/social/social";
-    public static final String TEST_URL_NEWS = "http://apis.baidu.com/txapi/social/social?num=10&page=1";
+    public static final String SUFFIX_URL_NEWS = "/txapi/social/social";
+    public static final String TEST_URL_NEWS = "/txapi/social/social?num=10&page=1";
 
     /**
      * Healthy
      */
-    public static final String BASE_URL_HEALTHY = "http://apis.baidu.com/tngou/info/list";
-    public static final String TEST_URL_HEALTHY = "http://apis.baidu.com/tngou/info/list?id=0&page=1&rows=10";
+    public static final String SUFFIX_URL_HEALTHY = "/tngou/info/list";
+    public static final String TEST_URL_HEALTHY = "/tngou/info/list?id=0&page=1&rows=10";
 
     /**
      * Travels
      */
-    public static final String BASE_URL_TRAVELS = "http://apis.baidu.com/qunartravel/travellist/travellist";
-    public static final String TEST_URL_TRAVELS = "http://apis.baidu.com/qunartravel/travellist/travellist?query=&page=1";
+    public static final String SUFFIX_URL_TRAVELS = "/qunartravel/travellist/travellist";
+    public static final String TEST_URL_TRAVELS = "/qunartravel/travellist/travellist?query=&page=1";
 
 }

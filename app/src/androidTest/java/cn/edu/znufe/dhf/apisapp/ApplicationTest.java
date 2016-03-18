@@ -5,7 +5,11 @@ import android.test.ApplicationTestCase;
 import android.util.Log;
 
 import cn.edu.znufe.dhf.apisapp.constant.App;
+import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.service.NewsService;
 import cn.edu.znufe.dhf.apisapp.util.NetworkUtils;
+import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
+import retrofit2.Call;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -30,9 +34,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
      * @throws Exception
      */
     public void testGetForString() throws Exception {
-        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_NEWS));
-        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_HEALTHY));
-        Log.e(TAG, "result----->" + NetworkUtils.getForString(App.TEST_URL_TRAVELS));
+        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_NEWS));
+        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_HEALTHY));
+        Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_TRAVELS));
     }
 
     /**
@@ -41,15 +45,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
      * @throws Exception
      */
     public void testRetrofit() throws Exception {
-        /*String httpUrl = "";
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://10.0.2.2:8080")
-                .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<TestObject> call = retrofitService.getMessZh("test");
-        Log.e(TAG, "result----->" + call.execute().body().getMessage());*/
-
+        NewsService newsService = RetrofitHelper.getInstance().getRetrofit().create(NewsService.class);
+        Call<NewsMapObject> call = newsService.getData();
+        Log.e(TAG, "result----->" + call.execute().body().getMsg());
     }
 
 }
