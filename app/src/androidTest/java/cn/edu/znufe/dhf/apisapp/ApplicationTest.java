@@ -10,6 +10,8 @@ import cn.edu.znufe.dhf.apisapp.service.NewsService;
 import cn.edu.znufe.dhf.apisapp.util.NetworkUtils;
 import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -45,9 +47,20 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
      * @throws Exception
      */
     public void testRetrofit() throws Exception {
-        NewsService newsService = RetrofitHelper.getInstance().getRetrofit().create(NewsService.class);
+        NewsService newsService = RetrofitHelper.getInstance(NewsService.class);
         Call<NewsMapObject> call = newsService.getData();
-        Log.e(TAG, "result----->" + call.execute().body().getMsg());
+        call.enqueue(new Callback<NewsMapObject>() {
+            @Override
+            public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
+                Log.e(TAG, "code------->" + response.code());
+                Log.e(TAG, "result----->" + response.body().getMsg());
+            }
+
+            @Override
+            public void onFailure(Call<NewsMapObject> call, Throwable t) {
+
+            }
+        });
     }
 
 }
