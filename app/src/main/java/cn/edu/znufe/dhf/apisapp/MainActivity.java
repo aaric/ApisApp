@@ -1,25 +1,31 @@
 package cn.edu.znufe.dhf.apisapp;
 
-import android.os.*;
+import android.os.Bundle;
 import android.os.Process;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Main Activity.
@@ -131,9 +137,51 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            int section = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            ListView mListView = (ListView) rootView.findViewById(R.id.listView);
+            Log.i(TAG, "section----->" + section);
+
+            // Test data.
+            List<Map<String, String>> list = new ArrayList<>();
+            for (int i = 0; i < 30; i++) {
+                Map<String, String> map = new HashMap<>();
+                map.put("title", "test" + section + i);
+                map.put("time", "" + Calendar.getInstance().getTimeInMillis());
+                list.add(map);
+            }
+
+            SimpleAdapter mSimpleAdapter = null;
+
+            // Select Fragment.
+            switch (section) {
+                case 1:
+                    // News
+                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
+                            R.layout.fragment_item_news,
+                            new String[]{"title", "time"},
+                            new int[]{R.id.news_title, R.id.news_time});
+                    break;
+                case 2:
+                    // Healthy
+                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
+                            R.layout.fragment_item_healthy,
+                            new String[]{"title", "time"},
+                            new int[]{R.id.healthy_title, R.id.healthy_time});
+                    break;
+                case 3:
+                    // Travels
+                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
+                            R.layout.fragment_item_travels,
+                            new String[]{"title", "time"},
+                            new int[]{R.id.travels_title, R.id.travels_time});
+                    break;
+                default:
+                    // Nothing
+            }
+
+            mListView.setAdapter(mSimpleAdapter);
+
             return rootView;
         }
     }
@@ -167,9 +215,9 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return getString(R.string.activity_main_news);
                 case 1:
-                    return getString(R.string.activity_main_essay);
+                    return getString(R.string.activity_main_healthy);
                 case 2:
-                    return getString(R.string.activity_main_horoscope);
+                    return getString(R.string.activity_main_travels);
             }
             return null;
         }

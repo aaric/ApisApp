@@ -2,15 +2,14 @@
     <string name="app_name">关注平台</string>
     <string name="action_settings">设置</string>
     <string name="action_about">退出</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="activity_guidance_tab1">Tab One</string>
     <string name="activity_guidance_tab2">Tab Two</string>
     <string name="activity_guidance_tab3">Tab Three</string>
     <string name="activity_guidance_btn_click">开始体验</string>
 
-    <string name="activity_main_news">热门新闻</string>
-    <string name="activity_main_essay">微信信息</string>
-    <string name="activity_main_horoscope">星座运势</string>
+    <string name="activity_main_news">热点新闻</string>
+    <string name="activity_main_healthy">健康资讯</string>
+    <string name="activity_main_travels">旅行游记</string>
 
 </resources>
