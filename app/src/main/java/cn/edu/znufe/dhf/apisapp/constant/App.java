@@ -10,8 +10,7 @@ public final class App {
      */
     public static final String BAIDU_API_BASE_URL = "http://apis.baidu.com";
     public static final String BAIDU_APIKEY_NAME = "apikey";
-    public static final String BAIDU_APIKEY_VALUE = "d259367c2da923b105bb1dd2311cf1b2";
-    public static final String BAIDU_APIKEY_AUTH = BAIDU_APIKEY_NAME + ": " + BAIDU_APIKEY_VALUE;
+    public static final String BAIDU_APIKEY_VALUE = "35035c1095f3bc7f16926dfb30db92f7";
 
     /**
      * News

@@ -11,7 +11,7 @@ public class TravelsMapObject {
     private Integer errcode;
     private String errmsg;
     private Integer ver;
-    private List<TravelsObject> data;
+    private TravelsBookObject data;
 
     public TravelsMapObject() {
     }
@@ -48,12 +48,12 @@ public class TravelsMapObject {
         this.ver = ver;
     }
 
-    public List<TravelsObject> getData() {
+    public TravelsBookObject getData() {
         return data;
     }
 
-    public void setData(List<TravelsObject> data) {
+    public void setData(TravelsBookObject data) {
         this.data = data;
     }
-    
+
 }

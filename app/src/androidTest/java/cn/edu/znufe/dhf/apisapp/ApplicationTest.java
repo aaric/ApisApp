@@ -5,8 +5,13 @@ import android.test.ApplicationTestCase;
 import android.util.Log;
 
 import cn.edu.znufe.dhf.apisapp.constant.App;
+import cn.edu.znufe.dhf.apisapp.model.HealthyMapObject;
 import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.model.TravelsMapObject;
+import cn.edu.znufe.dhf.apisapp.service.HealthyService;
 import cn.edu.znufe.dhf.apisapp.service.NewsService;
+import cn.edu.znufe.dhf.apisapp.service.TravelsService;
+import cn.edu.znufe.dhf.apisapp.util.GsonUtils;
 import cn.edu.znufe.dhf.apisapp.util.NetworkUtils;
 import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
 import retrofit2.Call;
@@ -31,25 +36,26 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     /**
-     * Test for get string by restTemplate
+     * Test for get string by restTemplate.
      *
      * @throws Exception
      */
     public void testGetForString() throws Exception {
-        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_NEWS));
-        //Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_HEALTHY));
-        Log.e(TAG, "result----->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_TRAVELS));
+        Log.e(TAG, "result-->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_NEWS));
+        Log.e(TAG, "result-->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_HEALTHY));
+        Log.e(TAG, "result-->" + NetworkUtils.getForString(App.BAIDU_API_BASE_URL + App.TEST_URL_TRAVELS));
     }
 
     /**
-     * Test for get object by retrofit
+     * Test for get object by newsService.
      *
      * @throws Exception
      */
-    public void testRetrofit() throws Exception {
+    public void testNewsService() throws Exception {
         NewsService newsService = RetrofitHelper.getInstance(NewsService.class);
-        Call<NewsMapObject> call = newsService.getData();
-        call.enqueue(new Callback<NewsMapObject>() {
+        Call<NewsMapObject> call = newsService.getData(10, 1);
+        Log.e(TAG, "result-->" + GsonUtils.getString(call.execute().body()));
+        /*call.enqueue(new Callback<NewsMapObject>() {
             @Override
             public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
                 Log.e(TAG, "code------->" + response.code());
@@ -58,9 +64,26 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
             @Override
             public void onFailure(Call<NewsMapObject> call, Throwable t) {
-
+                Log.e(TAG, "exception------->" + t.getLocalizedMessage());
             }
-        });
+        });*/
+    }
+
+    /**
+     * Test for get object by healthyService.
+     *
+     * @throws Exception
+     */
+    public void testHealthyService() throws  Exception {
+        HealthyService healthyService = RetrofitHelper.getInstance(HealthyService.class);
+        Call<HealthyMapObject> call = healthyService.getData(0, 1, 10);
+        Log.e(TAG, "result-->" + GsonUtils.getString(call.execute().body()));
+    }
+
+    public void testTravelsService() throws Exception {
+        TravelsService travelsService = RetrofitHelper.getInstance(TravelsService.class);
+        Call<TravelsMapObject> call = travelsService.getData("", 1);
+        Log.e(TAG, "result-->" + GsonUtils.getString(call.execute().body()));
     }
 
 }

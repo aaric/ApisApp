@@ -19,8 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public final class RetrofitHelper {
 
-    private Retrofit singletonRetrofit;
-    private static RetrofitHelper singletonRetrofitHelper;
+    private Retrofit mRetrofit;
+    private static RetrofitHelper mRetrofitHelper;
 
     private RetrofitHelper() {
         Gson gson = new GsonBuilder()
@@ -38,7 +38,7 @@ public final class RetrofitHelper {
                     }
                 })
                 .build();
-        singletonRetrofit = new Retrofit.Builder()
+        mRetrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(App.BAIDU_API_BASE_URL)
@@ -47,14 +47,14 @@ public final class RetrofitHelper {
     }
 
     public static RetrofitHelper getInstance() {
-        if (null == singletonRetrofitHelper) {
+        if (null == mRetrofitHelper) {
             synchronized (RetrofitHelper.class) {
-                if (null == singletonRetrofitHelper) {
-                    singletonRetrofitHelper = new RetrofitHelper();
+                if (null == mRetrofitHelper) {
+                    mRetrofitHelper = new RetrofitHelper();
                 }
             }
         }
-        return singletonRetrofitHelper;
+        return mRetrofitHelper;
     }
 
     public static <T> T getInstance(final Class<T> service) {
@@ -62,7 +62,7 @@ public final class RetrofitHelper {
     }
 
     public Retrofit getRetrofit() {
-        return singletonRetrofit;
+        return mRetrofit;
     }
 
 }
