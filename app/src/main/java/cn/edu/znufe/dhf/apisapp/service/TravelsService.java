@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface TravelsService {
 
     /**
-     * Get list data.
+     * Get data list.
      *
      * @param query default ""
      * @param page default 1

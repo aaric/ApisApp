@@ -32,7 +32,7 @@ public final class RetrofitHelper {
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request()
                                 .newBuilder()
-                                .addHeader(App.BAIDU_APIKEY_NAME, App.BAIDU_APIKEY_VALUE)
+                                .addHeader(App.BAIDU_API_APIKEY_NAME, App.BAIDU_API_APIKEY_VALUE)
                                 .build();
                         return chain.proceed(request);
                     }

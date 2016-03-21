@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface NewsService {
 
     /**
-     * Get list data.
+     * Get data list.
      *
      * @param num default 10
      * @param page default 1

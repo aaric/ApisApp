@@ -25,7 +25,7 @@ public class NetworkUtils {
      */
     private static HttpHeaders getHttpHeaders(MediaType mediaType) throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(App.BAIDU_APIKEY_NAME, App.BAIDU_APIKEY_VALUE);
+        httpHeaders.set(App.BAIDU_API_APIKEY_NAME, App.BAIDU_API_APIKEY_VALUE);
         httpHeaders.setContentType(mediaType);
         return httpHeaders;
     }
