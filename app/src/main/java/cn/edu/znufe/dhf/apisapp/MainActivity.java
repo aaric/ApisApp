@@ -27,6 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.znufe.dhf.apisapp.adapter.NewsAdapter;
+import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.service.NewsService;
+import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Main Activity.
  */
@@ -139,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             int section = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ListView mListView = (ListView) rootView.findViewById(R.id.listView);
+            final ListView mListView = (ListView) rootView.findViewById(R.id.listView);
             Log.i(TAG, "section----->" + section);
 
             // Test data.
@@ -157,10 +165,26 @@ public class MainActivity extends AppCompatActivity {
             switch (section) {
                 case 1:
                     // News
-                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
-                            R.layout.fragment_item_news,
-                            new String[]{"title", "time"},
-                            new int[]{R.id.news_title, R.id.news_time});
+                    try {
+                        NewsService newsService = RetrofitHelper.getInstance(NewsService.class);
+                        Call<NewsMapObject> call = newsService.getData(10, 1);
+                        call.enqueue(new Callback<NewsMapObject>() {
+                            @Override
+                            public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
+                                Log.e(TAG, "code---->" + response.code());
+                                Log.e(TAG, "result-->" + response.body().getNewslist().size());
+                                mListView.setAdapter(new NewsAdapter(getContext(), response.body().getNewslist()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<NewsMapObject> call, Throwable t) {
+                                Log.e(TAG, "exception-->" + t.getLocalizedMessage());
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        Log.e(TAG, "exception-->" + e.getLocalizedMessage());
+                    }
                     break;
                 case 2:
                     // Healthy
@@ -168,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                             R.layout.fragment_item_healthy,
                             new String[]{"title", "time"},
                             new int[]{R.id.healthy_title, R.id.healthy_time});
+                    mListView.setAdapter(mSimpleAdapter);
                     break;
                 case 3:
                     // Travels
@@ -175,12 +200,11 @@ public class MainActivity extends AppCompatActivity {
                             R.layout.fragment_item_travels,
                             new String[]{"title", "time"},
                             new int[]{R.id.travels_title, R.id.travels_time});
+                    mListView.setAdapter(mSimpleAdapter);
                     break;
                 default:
                     // Nothing
             }
-
-            mListView.setAdapter(mSimpleAdapter);
 
             return rootView;
         }

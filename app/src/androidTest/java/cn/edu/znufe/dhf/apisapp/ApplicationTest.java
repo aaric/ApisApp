@@ -60,13 +60,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         /*call.enqueue(new Callback<NewsMapObject>() {
             @Override
             public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
-                Log.e(TAG, "code------->" + response.code());
-                Log.e(TAG, "result----->" + response.body().getMsg());
+                Log.e(TAG, "code---->" + response.code());
+                Log.e(TAG, "result-->" + response.body().getMsg());
             }
 
             @Override
             public void onFailure(Call<NewsMapObject> call, Throwable t) {
-                Log.e(TAG, "exception------->" + t.getLocalizedMessage());
+                Log.e(TAG, "exception-->" + t.getLocalizedMessage());
             }
         });*/
     }
@@ -83,13 +83,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         /*call1.enqueue(new Callback<HealthyMapObject>() {
             @Override
             public void onResponse(Call<HealthyMapObject> call, Response<HealthyMapObject> response) {
-                Log.e(TAG, "code1------->" + response.code());
-                Log.e(TAG, "result1----->" + response.body().getTngou().size());
+                Log.e(TAG, "code1---->" + response.code());
+                Log.e(TAG, "result1-->" + response.body().getTngou().size());
             }
 
             @Override
             public void onFailure(Call<HealthyMapObject> call, Throwable t) {
-                Log.e(TAG, "exception1------->" + t.getLocalizedMessage());
+                Log.e(TAG, "exception1-->" + t.getLocalizedMessage());
             }
         });*/
 
@@ -98,13 +98,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         /*call2.enqueue(new Callback<HealthyDetailsObject>() {
             @Override
             public void onResponse(Call<HealthyDetailsObject> call, Response<HealthyDetailsObject> response) {
-                Log.e(TAG, "code2------->" + response.code());
-                Log.e(TAG, "result2----->" + response.body().getUrl());
+                Log.e(TAG, "code2---->" + response.code());
+                Log.e(TAG, "result2-->" + response.body().getUrl());
             }
 
             @Override
             public void onFailure(Call<HealthyDetailsObject> call, Throwable t) {
-                Log.e(TAG, "exception2------->" + t.getLocalizedMessage());
+                Log.e(TAG, "exception2-->" + t.getLocalizedMessage());
             }
         });*/
     }
@@ -116,13 +116,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         call.enqueue(new Callback<TravelsMapObject>() {
             @Override
             public void onResponse(Call<TravelsMapObject> call, Response<TravelsMapObject> response) {
-                Log.e(TAG, "code------->" + response.code());
-                Log.e(TAG, "result----->" + response.body().getData().getBooks().size());
+                Log.e(TAG, "code---->" + response.code());
+                Log.e(TAG, "result-->" + response.body().getData().getBooks().size());
             }
 
             @Override
             public void onFailure(Call<TravelsMapObject> call, Throwable t) {
-                Log.e(TAG, "exception------->" + t.getLocalizedMessage());
+                Log.e(TAG, "exception-->" + t.getLocalizedMessage());
             }
         });
     }
