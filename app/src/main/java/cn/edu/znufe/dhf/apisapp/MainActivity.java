@@ -1,5 +1,6 @@
 package cn.edu.znufe.dhf.apisapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
@@ -18,17 +19,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import cn.edu.znufe.dhf.apisapp.adapter.HealthyAdapter;
 import cn.edu.znufe.dhf.apisapp.adapter.NewsAdapter;
+import cn.edu.znufe.dhf.apisapp.adapter.TravelsAdapter;
+import cn.edu.znufe.dhf.apisapp.model.HealthyMapObject;
 import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.model.TravelsMapObject;
+import cn.edu.znufe.dhf.apisapp.service.HealthyService;
 import cn.edu.znufe.dhf.apisapp.service.NewsService;
+import cn.edu.znufe.dhf.apisapp.service.TravelsService;
 import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             // Settings.
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else if (id == R.id.action_about) {
             // Exit.
@@ -147,18 +148,6 @@ public class MainActivity extends AppCompatActivity {
             int section = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             final ListView mListView = (ListView) rootView.findViewById(R.id.listView);
-            Log.i(TAG, "section----->" + section);
-
-            // Test data.
-            List<Map<String, String>> list = new ArrayList<>();
-            for (int i = 0; i < 30; i++) {
-                Map<String, String> map = new HashMap<>();
-                map.put("title", "test" + section + i);
-                map.put("time", "" + Calendar.getInstance().getTimeInMillis());
-                list.add(map);
-            }
-
-            SimpleAdapter mSimpleAdapter = null;
 
             // Select Fragment.
             switch (section) {
@@ -187,19 +176,49 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     // Healthy
-                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
-                            R.layout.fragment_item_healthy,
-                            new String[]{"title", "time"},
-                            new int[]{R.id.healthy_title, R.id.healthy_time});
-                    mListView.setAdapter(mSimpleAdapter);
+                    try {
+                        HealthyService healthyService = RetrofitHelper.getInstance(HealthyService.class);
+                        Call<HealthyMapObject> call = healthyService.getData(0, 1, 10);
+                        call.enqueue(new Callback<HealthyMapObject>() {
+                            @Override
+                            public void onResponse(Call<HealthyMapObject> call, Response<HealthyMapObject> response) {
+                                Log.e(TAG, "code---->" + response.code());
+                                Log.e(TAG, "result-->" + response.body().getTngou().size());
+                                mListView.setAdapter(new HealthyAdapter(getContext(), response.body().getTngou()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<HealthyMapObject> call, Throwable t) {
+                                Log.e(TAG, "exception-->" + t.getLocalizedMessage());
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        Log.e(TAG, "exception-->" + e.getLocalizedMessage());
+                    }
                     break;
                 case 3:
                     // Travels
-                    mSimpleAdapter = new SimpleAdapter(container.getContext(), list,
-                            R.layout.fragment_item_travels,
-                            new String[]{"title", "time"},
-                            new int[]{R.id.travels_title, R.id.travels_time});
-                    mListView.setAdapter(mSimpleAdapter);
+                    try {
+                        TravelsService travelsService = RetrofitHelper.getInstance(TravelsService.class);
+                        Call<TravelsMapObject> call = travelsService.getData("", 1);
+                        call.enqueue(new Callback<TravelsMapObject>() {
+                            @Override
+                            public void onResponse(Call<TravelsMapObject> call, Response<TravelsMapObject> response) {
+                                Log.e(TAG, "code---->" + response.code());
+                                Log.e(TAG, "result-->" + response.body().getData().getBooks().size());
+                                mListView.setAdapter(new TravelsAdapter(getContext(), response.body().getData().getBooks()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<TravelsMapObject> call, Throwable t) {
+                                Log.e(TAG, "exception-->" + t.getLocalizedMessage());
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        Log.e(TAG, "exception-->" + e.getLocalizedMessage());
+                    }
                     break;
                 default:
                     // Nothing

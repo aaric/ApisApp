@@ -46,14 +46,14 @@ public class NewsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         NewsObject newsObject = mList.get(i);
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.fragment_item_news, null);
-        TextView mTextViewTitle = (TextView) rootView.findViewById(R.id.tv_news_title);
-        mTextViewTitle.setText(newsObject.getTitle());
-        ImageView mImageViewPic = (ImageView) rootView.findViewById(R.id.iv_news_pic);
-        GlideUtils.loadImage(mContext, newsObject.getPicUrl(), mImageViewPic);
         TextView mTextViewDescription = (TextView) rootView.findViewById(R.id.tv_news_description);
         mTextViewDescription.setText(newsObject.getDescription());
         TextView mTextViewCtime = (TextView) rootView.findViewById(R.id.tv_news_ctime);
         mTextViewCtime.setText(newsObject.getCtime());
+        ImageView mImageViewPic = (ImageView) rootView.findViewById(R.id.iv_news_pic);
+        GlideUtils.loadImage(mContext, newsObject.getPicUrl(), mImageViewPic);
+        TextView mTextViewTitle = (TextView) rootView.findViewById(R.id.tv_news_title);
+        mTextViewTitle.setText(newsObject.getTitle());
         return rootView;
     }
 

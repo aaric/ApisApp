@@ -1,6 +1,5 @@
 package cn.edu.znufe.dhf.apisapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,10 +15,12 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.znufe.dhf.apisapp.abs.AbstractActivity;
+
 /**
  * Guidance Activity.
  */
-public class GuidanceActivity extends Activity {
+public class GuidanceActivity extends AbstractActivity {
 
     /**
      * TAG
