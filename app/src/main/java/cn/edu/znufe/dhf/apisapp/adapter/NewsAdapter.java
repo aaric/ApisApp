@@ -1,7 +1,6 @@
 package cn.edu.znufe.dhf.apisapp.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import cn.edu.znufe.dhf.apisapp.R;
 import cn.edu.znufe.dhf.apisapp.model.NewsObject;
+import cn.edu.znufe.dhf.apisapp.util.GlideUtils;
 
 /**
  * Created by Aaric on 2016/3/21.
@@ -51,7 +49,7 @@ public class NewsAdapter extends BaseAdapter {
         TextView mTextViewTitle = (TextView) rootView.findViewById(R.id.tv_news_title);
         mTextViewTitle.setText(newsObject.getTitle());
         ImageView mImageViewPic = (ImageView) rootView.findViewById(R.id.iv_news_pic);
-        Glide.with(mContext).load(newsObject.getPicUrl()).centerCrop().crossFade().into(mImageViewPic);
+        GlideUtils.loadImage(mContext, newsObject.getPicUrl(), mImageViewPic);
         TextView mTextViewDescription = (TextView) rootView.findViewById(R.id.tv_news_description);
         mTextViewDescription.setText(newsObject.getDescription());
         TextView mTextViewCtime = (TextView) rootView.findViewById(R.id.tv_news_ctime);
