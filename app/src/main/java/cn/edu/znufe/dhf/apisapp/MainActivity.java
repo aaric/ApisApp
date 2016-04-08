@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
                         call.enqueue(new Callback<NewsMapObject>() {
                             @Override
                             public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
-                                Log.e(TAG, "code---->" + response.code());
-                                Log.e(TAG, "result-->" + response.body().getNewslist().size());
+                                //Log.e(TAG, "code---->" + response.code());
+                                //Log.e(TAG, "result-->" + response.body().getNewslist().size());
                                 mListView.setAdapter(new NewsAdapter(getContext(), response.body().getNewslist()));
                             }
 
@@ -182,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
                         call.enqueue(new Callback<HealthyMapObject>() {
                             @Override
                             public void onResponse(Call<HealthyMapObject> call, Response<HealthyMapObject> response) {
-                                Log.e(TAG, "code---->" + response.code());
-                                Log.e(TAG, "result-->" + response.body().getTngou().size());
+                                //Log.e(TAG, "code---->" + response.code());
+                                //Log.e(TAG, "result-->" + response.body().getTngou().size());
                                 mListView.setAdapter(new HealthyAdapter(getContext(), response.body().getTngou()));
                             }
 
@@ -205,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
                         call.enqueue(new Callback<TravelsMapObject>() {
                             @Override
                             public void onResponse(Call<TravelsMapObject> call, Response<TravelsMapObject> response) {
-                                Log.e(TAG, "code---->" + response.code());
-                                Log.e(TAG, "result-->" + response.body().getData().getBooks().size());
+                                //Log.e(TAG, "code---->" + response.code());
+                                //Log.e(TAG, "result-->" + response.body().getData().getBooks().size());
                                 mListView.setAdapter(new TravelsAdapter(getContext(), response.body().getData().getBooks()));
                             }
 
