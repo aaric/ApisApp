@@ -9,25 +9,25 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class SettingsActivity extends AppCompatActivity {
+public class BrowserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_browser);
 
         ActionBar actionBar = getSupportActionBar();
         if(null != actionBar) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getIntent().getStringExtra("title"));
         }
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(this, "settings", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "browser", Toast.LENGTH_LONG).show();
                 Intent intent = NavUtils.getParentActivityIntent(this);
                 if(NavUtils.shouldUpRecreateTask(this, intent)) {
                     TaskStackBuilder.create(this)
