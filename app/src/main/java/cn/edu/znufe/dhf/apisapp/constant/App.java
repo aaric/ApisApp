@@ -32,4 +32,10 @@ public final class App {
     public static final String SUFFIX_URL_TRAVELS = "/qunartravel/travellist/travellist";
     public static final String TEST_URL_TRAVELS = "/qunartravel/travellist/travellist?query=&page=1";
 
+    /**
+     * Browser
+     */
+    public static final String BROWSER_TITLE_KEY = "title";
+    public static final String BROWSER_REDIRECT_URL_KEY = "redirect_url";
+
 }

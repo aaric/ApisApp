@@ -1,5 +1,6 @@
 package cn.edu.znufe.dhf.apisapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,12 +29,19 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.List;
+
 import cn.edu.znufe.dhf.apisapp.adapter.HealthyAdapter;
 import cn.edu.znufe.dhf.apisapp.adapter.NewsAdapter;
 import cn.edu.znufe.dhf.apisapp.adapter.TravelsAdapter;
+import cn.edu.znufe.dhf.apisapp.constant.App;
+import cn.edu.znufe.dhf.apisapp.model.HealthyDetailsObject;
 import cn.edu.znufe.dhf.apisapp.model.HealthyMapObject;
+import cn.edu.znufe.dhf.apisapp.model.HealthyObject;
 import cn.edu.znufe.dhf.apisapp.model.NewsMapObject;
+import cn.edu.znufe.dhf.apisapp.model.NewsObject;
 import cn.edu.znufe.dhf.apisapp.model.TravelsMapObject;
+import cn.edu.znufe.dhf.apisapp.model.TravelsObject;
 import cn.edu.znufe.dhf.apisapp.service.HealthyService;
 import cn.edu.znufe.dhf.apisapp.service.NewsService;
 import cn.edu.znufe.dhf.apisapp.service.TravelsService;
@@ -217,14 +225,15 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call<NewsMapObject> call, Response<NewsMapObject> response) {
                                 //Log.e(TAG, "code---->" + response.code());
                                 //Log.e(TAG, "result-->" + response.body().getNewslist().size());
-                                mListView.setAdapter(new NewsAdapter(getContext(), response.body().getNewslist()));
+                                final List<NewsObject> objects = response.body().getNewslist();
+                                mListView.setAdapter(new NewsAdapter(getContext(), objects));
                                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                         Intent intent = new Intent();
                                         intent.setClass(view.getContext(), BrowserActivity.class);
-                                        intent.putExtra("title", "title");
-                                        intent.putExtra("url", "http://www.baidu.com");
+                                        intent.putExtra(App.BROWSER_TITLE_KEY, objects.get(i).getTitle());
+                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, objects.get(i).getUrl());
                                         startActivity(intent);
                                     }
                                 });
@@ -243,14 +252,43 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     // Healthy
                     try {
-                        HealthyService healthyService = RetrofitHelper.getInstance(HealthyService.class);
+                        final HealthyService healthyService = RetrofitHelper.getInstance(HealthyService.class);
                         Call<HealthyMapObject> call = healthyService.getData(0, 1, 10);
                         call.enqueue(new Callback<HealthyMapObject>() {
                             @Override
                             public void onResponse(Call<HealthyMapObject> call, Response<HealthyMapObject> response) {
                                 //Log.e(TAG, "code---->" + response.code());
                                 //Log.e(TAG, "result-->" + response.body().getTngou().size());
-                                mListView.setAdapter(new HealthyAdapter(getContext(), response.body().getTngou()));
+                                final List<HealthyObject> objects = response.body().getTngou();
+                                mListView.setAdapter(new HealthyAdapter(getContext(), objects));
+                                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        try {
+                                            final Context context = view.getContext();
+                                            Call<HealthyDetailsObject> callDetails = RetrofitHelper.getInstance(HealthyService.class).getDataDetails(objects.get(i).getId());
+                                            callDetails.enqueue(new Callback<HealthyDetailsObject>() {
+                                                @Override
+                                                public void onResponse(Call<HealthyDetailsObject> call, Response<HealthyDetailsObject> response) {
+                                                    HealthyDetailsObject healthyDetailsObject = response.body();
+                                                    Intent intent = new Intent();
+                                                    intent.setClass(context, BrowserActivity.class);
+                                                    intent.putExtra(App.BROWSER_TITLE_KEY, healthyDetailsObject.getTitle());
+                                                    intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, healthyDetailsObject.getUrl());
+                                                    startActivity(intent);
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<HealthyDetailsObject> call, Throwable t) {
+                                                    Log.e(TAG, "exception-->" + t.getLocalizedMessage());
+                                                }
+                                            });
+
+                                        } catch (Exception e) {
+                                            Log.e(TAG, "exception-->" + e.getLocalizedMessage());
+                                        }
+                                    }
+                                });
                             }
 
                             @Override
@@ -273,7 +311,18 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call<TravelsMapObject> call, Response<TravelsMapObject> response) {
                                 //Log.e(TAG, "code---->" + response.code());
                                 //Log.e(TAG, "result-->" + response.body().getData().getBooks().size());
-                                mListView.setAdapter(new TravelsAdapter(getContext(), response.body().getData().getBooks()));
+                                final List<TravelsObject> objects = response.body().getData().getBooks();
+                                mListView.setAdapter(new TravelsAdapter(getContext(), objects));
+                                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Intent intent = new Intent();
+                                        intent.setClass(view.getContext(), BrowserActivity.class);
+                                        intent.putExtra(App.BROWSER_TITLE_KEY, objects.get(i).getTitle());
+                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, objects.get(i).getBookUrl());
+                                        startActivity(intent);
+                                    }
+                                });
                             }
 
                             @Override
