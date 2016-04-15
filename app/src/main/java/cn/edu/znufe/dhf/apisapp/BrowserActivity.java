@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -46,6 +47,14 @@ public class BrowserActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_browser, menu);
+        return true;
+    }
+
+    boolean flag = false;
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -58,6 +67,16 @@ public class BrowserActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     NavUtils.navigateUpTo(this, intent);
                 }
+                return true;
+            case R.id.action_favourite:
+                if(!flag) {
+                    item.setIcon(R.drawable.favourited);
+                    Toast.makeText(this, "添加收藏成功！", Toast.LENGTH_LONG).show();
+                } else {
+                    item.setIcon(R.drawable.favourite);
+                    Toast.makeText(this, "取消收藏成功！", Toast.LENGTH_LONG).show();
+                }
+                flag = !flag;
                 return true;
         }
         return super.onOptionsItemSelected(item);
