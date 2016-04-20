@@ -2,6 +2,7 @@ package cn.edu.znufe.dhf.apisapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.design.widget.FloatingActionButton;
@@ -41,6 +42,7 @@ import cn.edu.znufe.dhf.apisapp.service.HealthyService;
 import cn.edu.znufe.dhf.apisapp.service.NewsService;
 import cn.edu.znufe.dhf.apisapp.service.TravelsService;
 import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -120,7 +122,21 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_about) {
             // Exit.
-            Process.killProcess(Process.myPid());
+            //Process.killProcess(Process.myPid());
+            PackageInfo packageInfo = null;
+            try {
+                packageInfo = getApplicationContext()
+                        .getPackageManager()
+                        .getPackageInfo(getPackageName(), 0);
+
+            } catch (Exception e) {
+                Log.e(TAG, "exception-->" + e.getLocalizedMessage());
+            }
+            new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                    .setCustomImage(R.mipmap.ic_launcher)
+                    .setTitleText(getString(R.string.app_version) + (null == packageInfo? "1.0": packageInfo.versionName))
+                    .setContentText(getString(R.string.app_copyright))
+                    .show();
             return true;
         }
 
