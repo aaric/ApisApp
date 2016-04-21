@@ -6,14 +6,22 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.Dao;
+
+import org.apache.commons.lang.StringUtils;
+
+import java.sql.SQLException;
+import java.util.List;
+
 import cn.edu.znufe.dhf.apisapp.constant.App;
+import cn.edu.znufe.dhf.apisapp.entity.FavouriteData;
+import cn.edu.znufe.dhf.apisapp.helper.DatabaseHelper;
 
 public class BrowserActivity extends AppCompatActivity {
 
@@ -70,11 +78,33 @@ public class BrowserActivity extends AppCompatActivity {
                 return true;
             case R.id.action_favourite:
                 if(!flag) {
+                    try {
+                        DatabaseHelper dbHelper = DatabaseHelper.getInstance(getApplicationContext());
+                        Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
+                        List<FavouriteData> favouriteDataList = favouriteDataDao.queryForEq("title", mTitle);
+                        if(null == favouriteDataList || 0 == favouriteDataList.size()) {
+                            FavouriteData favouriteData = new FavouriteData(mTitle, mRedirectUrl, "");
+                            favouriteDataDao.create(favouriteData);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     item.setIcon(R.drawable.favourited);
                     Toast.makeText(this, "添加收藏成功！", Toast.LENGTH_LONG).show();
                 } else {
+                    try {
+                        DatabaseHelper dbHelper = DatabaseHelper.getInstance(getApplicationContext());
+                        Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
+                        List<FavouriteData> favouriteDataList = favouriteDataDao.queryForAll();
+                        Toast.makeText(this, StringUtils.join(favouriteDataList, ","), Toast.LENGTH_LONG).show();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     item.setIcon(R.drawable.favourite);
-                    Toast.makeText(this, "取消收藏成功！", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "取消收藏成功！", Toast.LENGTH_LONG).show();
                 }
                 flag = !flag;
                 return true;

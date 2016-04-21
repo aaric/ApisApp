@@ -1,4 +1,4 @@
-package cn.edu.znufe.dhf.apisapp.util;
+package cn.edu.znufe.dhf.apisapp.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

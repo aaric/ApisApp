@@ -14,7 +14,7 @@ import cn.edu.znufe.dhf.apisapp.service.NewsService;
 import cn.edu.znufe.dhf.apisapp.service.TravelsService;
 import cn.edu.znufe.dhf.apisapp.util.GsonUtils;
 import cn.edu.znufe.dhf.apisapp.util.NetworkUtils;
-import cn.edu.znufe.dhf.apisapp.util.RetrofitHelper;
+import cn.edu.znufe.dhf.apisapp.helper.RetrofitHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
