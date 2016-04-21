@@ -21,7 +21,9 @@
             android:padding="10dp">
 
             <TextView
+                android:minHeight="30dp"
                 android:text="@string/activity_settings_set_news_total"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="1" />
 
         </TableRow>
@@ -33,7 +35,9 @@
             android:padding="10dp">
 
             <TextView
+                android:minHeight="30dp"
                 android:text="@string/activity_settings_set_healthy_total"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="1" />
         </TableRow>
 
@@ -44,7 +48,9 @@
             android:padding="10dp">
 
             <TextView
+                android:minHeight="30dp"
                 android:text="@string/activity_settings_set_travels_total"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="1" />
 
         </TableRow>
@@ -57,13 +63,16 @@
         android:layout_marginTop="10dp">
 
         <TableRow
+            android:id="@+id/activity_settings_tablerow_favourite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_all_corner_with_line"
             android:padding="10dp">
 
             <TextView
+                android:minHeight="30dp"
                 android:text="@string/activity_settings_favourite"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="1" />
         </TableRow>
 
@@ -75,13 +84,16 @@
         android:layout_marginTop="10dp">
 
         <TableRow
+            android:id="@+id/activity_settings_tablerow_exit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_all_corner_with_line"
             android:padding="10dp">
 
             <TextView
+                android:minHeight="30dp"
                 android:text="@string/activity_settings_exit"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_column="1" />
         </TableRow>
 

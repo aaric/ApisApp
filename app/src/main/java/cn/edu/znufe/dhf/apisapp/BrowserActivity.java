@@ -6,6 +6,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -27,6 +28,10 @@ public class BrowserActivity extends AppCompatActivity {
 
     private String mTitle;
     private String mRedirectUrl;
+    private String mImageUrl;
+    private String mDescription;
+    private String mTag;
+    private boolean mFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,9 @@ public class BrowserActivity extends AppCompatActivity {
 
         mTitle = getIntent().getStringExtra(App.BROWSER_TITLE_KEY);
         mRedirectUrl = getIntent().getStringExtra(App.BROWSER_REDIRECT_URL_KEY);
+        mImageUrl = getIntent().getStringExtra(App.BROWSER_IMAGE_URL_KEY);
+        mDescription = getIntent().getStringExtra(App.BROWSER_DESCRIPTION_KEY);
+        mTag = getIntent().getStringExtra(App.BROWSER_TAG_KEY);
 
         ActionBar actionBar = getSupportActionBar();
         if(null != actionBar) {
@@ -52,6 +60,17 @@ public class BrowserActivity extends AppCompatActivity {
             }
         });
 
+        try {
+            DatabaseHelper dbHelper = DatabaseHelper.getInstance(getApplicationContext());
+            Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
+            List<FavouriteData> favouriteDataList = favouriteDataDao.queryForEq("title", mTitle);
+            if(null == favouriteDataList && 0 != favouriteDataList.size()) {
+                mFlag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -59,8 +78,6 @@ public class BrowserActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_browser, menu);
         return true;
     }
-
-    boolean flag = false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,7 +94,7 @@ public class BrowserActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_favourite:
-                if(!flag) {
+                if(!mFlag) {
                     try {
                         DatabaseHelper dbHelper = DatabaseHelper.getInstance(getApplicationContext());
                         Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
@@ -96,17 +113,19 @@ public class BrowserActivity extends AppCompatActivity {
                     try {
                         DatabaseHelper dbHelper = DatabaseHelper.getInstance(getApplicationContext());
                         Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
-                        List<FavouriteData> favouriteDataList = favouriteDataDao.queryForAll();
-                        Toast.makeText(this, StringUtils.join(favouriteDataList, ","), Toast.LENGTH_LONG).show();
+                        List<FavouriteData> favouriteDataList = favouriteDataDao.queryForEq("title", mTitle);
+                        if (null != favouriteDataList && 0 != favouriteDataList.size()) {
+                            FavouriteData favouriteData = favouriteDataList.get(0);
+                            favouriteDataDao.deleteById(favouriteData.getId());
+                        }
 
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
 
                     item.setIcon(R.drawable.favourite);
-                    //Toast.makeText(this, "取消收藏成功！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "取消收藏成功！", Toast.LENGTH_LONG).show();
                 }
-                flag = !flag;
                 return true;
         }
         return super.onOptionsItemSelected(item);

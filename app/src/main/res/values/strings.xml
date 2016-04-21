@@ -20,5 +20,6 @@
     <string name="activity_settings_set_travels_total">设置旅行游记显示条数</string>
     <string name="activity_settings_favourite">我的收藏</string>
     <string name="activity_settings_exit">退出</string>
+    <string name="title_activity_">Activity</string>
 
 </resources>

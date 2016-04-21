@@ -191,10 +191,14 @@ public class MainActivity extends AppCompatActivity {
                                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        NewsObject newsObject = objects.get(i);
                                         Intent intent = new Intent();
                                         intent.setClass(view.getContext(), BrowserActivity.class);
-                                        intent.putExtra(App.BROWSER_TITLE_KEY, objects.get(i).getTitle());
-                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, objects.get(i).getUrl());
+                                        intent.putExtra(App.BROWSER_TITLE_KEY, newsObject.getTitle());
+                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, newsObject.getUrl());
+                                        intent.putExtra(App.BROWSER_IMAGE_URL_KEY, newsObject.getPicUrl());
+                                        intent.putExtra(App.BROWSER_DESCRIPTION_KEY, newsObject.getDescription());
+                                        intent.putExtra(App.BROWSER_TAG_KEY, getString(R.string.activity_main_news));
                                         startActivity(intent);
                                     }
                                 });
@@ -236,6 +240,9 @@ public class MainActivity extends AppCompatActivity {
                                                     intent.setClass(context, BrowserActivity.class);
                                                     intent.putExtra(App.BROWSER_TITLE_KEY, healthyDetailsObject.getTitle());
                                                     intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, healthyDetailsObject.getUrl());
+                                                    intent.putExtra(App.BROWSER_IMAGE_URL_KEY, healthyDetailsObject.getImg());
+                                                    intent.putExtra(App.BROWSER_DESCRIPTION_KEY, healthyDetailsObject.getDescription());
+                                                    intent.putExtra(App.BROWSER_TAG_KEY, getString(R.string.activity_main_healthy));
                                                     startActivity(intent);
                                                 }
 
@@ -277,10 +284,14 @@ public class MainActivity extends AppCompatActivity {
                                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        TravelsObject travelsObject = objects.get(i);
                                         Intent intent = new Intent();
                                         intent.setClass(view.getContext(), BrowserActivity.class);
-                                        intent.putExtra(App.BROWSER_TITLE_KEY, objects.get(i).getTitle());
-                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, objects.get(i).getBookUrl());
+                                        intent.putExtra(App.BROWSER_TITLE_KEY, travelsObject.getTitle());
+                                        intent.putExtra(App.BROWSER_REDIRECT_URL_KEY, travelsObject.getBookUrl());
+                                        intent.putExtra(App.BROWSER_IMAGE_URL_KEY, travelsObject.getHeadImage());
+                                        intent.putExtra(App.BROWSER_DESCRIPTION_KEY, travelsObject.getText());
+                                        intent.putExtra(App.BROWSER_TAG_KEY, getString(R.string.activity_main_travels));
                                         startActivity(intent);
                                     }
                                 });

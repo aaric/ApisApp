@@ -37,5 +37,8 @@ public final class App {
      */
     public static final String BROWSER_TITLE_KEY = "title";
     public static final String BROWSER_REDIRECT_URL_KEY = "redirect_url";
+    public static final String BROWSER_IMAGE_URL_KEY = "image_url";
+    public static final String BROWSER_DESCRIPTION_KEY = "description";
+    public static final String BROWSER_TAG_KEY = "tag";
 
 }
