@@ -26,6 +26,11 @@ import cn.edu.znufe.dhf.apisapp.helper.DatabaseHelper;
 
 public class BrowserActivity extends AppCompatActivity {
 
+    /**
+     * TAG
+     */
+    private static final String TAG = BrowserActivity.class.getSimpleName();
+
     private String mTitle;
     private String mRedirectUrl;
     private String mImageUrl;
@@ -100,7 +105,9 @@ public class BrowserActivity extends AppCompatActivity {
                         Dao<FavouriteData, Integer> favouriteDataDao = dbHelper.getDao(FavouriteData.class);
                         List<FavouriteData> favouriteDataList = favouriteDataDao.queryForEq("title", mTitle);
                         if(null == favouriteDataList || 0 == favouriteDataList.size()) {
-                            FavouriteData favouriteData = new FavouriteData(mTitle, mRedirectUrl, "");
+                            FavouriteData favouriteData = new FavouriteData(mTitle, mRedirectUrl, mTag);
+                            favouriteData.setImageUrl(mImageUrl);
+                            favouriteData.setDescription(mDescription);
                             favouriteDataDao.create(favouriteData);
                         }
                     } catch (SQLException e) {
@@ -120,7 +127,7 @@ public class BrowserActivity extends AppCompatActivity {
                         }
 
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "exception-->" + e.getLocalizedMessage());
                     }
 
                     item.setIcon(R.drawable.favourite);

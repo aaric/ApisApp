@@ -1,15 +1,14 @@
 package cn.edu.znufe.dhf.apisapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import cn.edu.znufe.dhf.apisapp.abs.AbstractActivity;
-
 /**
  * Welcome Activity.
  */
-public class WelcomeActivity extends AbstractActivity {
+public class WelcomeActivity extends Activity {
 
     /**
      * Constants.
